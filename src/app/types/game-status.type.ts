@@ -1,5 +1,6 @@
+import { PieceField } from "../models/piece-field";
+
 export type GameStatus = {
-  theSequence: number[]
-  sequence: number[]
+  fieldState: PieceField[]
   level: number
 };

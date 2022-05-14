@@ -1,9 +1,9 @@
+import fieldMap from "../configs/field/map"
 import { GameStatus } from "../types/game-status.type"
 
 export const genereteInitialStatus = (): GameStatus => {
   return {
-    theSequence: [ 3, 0, 1, 2 ],
-    sequence: [],
+    fieldState: fieldMap,
     level: 1,
   }
 }

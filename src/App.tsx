@@ -11,15 +11,19 @@ import { TOTAL_BLOCKS } from './app/configs';
 const App = () => {
   const [ gameStatus ] = useState<GameStatus>(genereteInitialStatus());
   const [ blocks ] = useState<number>(TOTAL_BLOCKS);
+  const [ positions ] = useState<string[]>([]);
 
-  const clickBlock = (blockId: number) => {
+
+  const clickBlock = (blockId: number, position: string) => {
     console.log('Do something...')
+    positions.push(position)
+    console.log(positions)
   };
 
   const renderBlocks = () => {
     const el: ReactElement[] | null = [];
-    for (let block=0; block < blocks; block++) {
-      el.push(<Block key={block} block={block} clickBlock={clickBlock}/>)
+    for (let block=0; block < gameStatus.fieldState.length; block++) {
+      el.push(<Block key={block} block={block} position={gameStatus.fieldState[block].position} clickBlock={clickBlock}/>)
     }
     return el;
   }

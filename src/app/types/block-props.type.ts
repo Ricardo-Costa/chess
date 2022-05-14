@@ -1,4 +1,5 @@
 export type BlockProps = {
   block: number
-  clickBlock: (blockId: number) => void
+  position: string
+  clickBlock: (blockId: number, position: string) => void
 }
