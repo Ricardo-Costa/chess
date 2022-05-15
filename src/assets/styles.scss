@@ -67,6 +67,21 @@ div#footer {
   span.score-value {
     color: rgb(90, 245, 90);
   }
+  #power-by {
+    $powerByColor: rgba(0, 0, 0, 0.247);
+    text-align: right;
+    padding-right: 20px;
+    font-size: 0.65rem;
+    font-style: italic;
+    font-weight: normal;
+    color: $powerByColor;
+
+    a {
+      font-size: 0.85rem;
+      color: $powerByColor;
+      text-decoration: none;
+    }
+  }
 }
 div#title {
   font-family: 'Play', sans-serif;
