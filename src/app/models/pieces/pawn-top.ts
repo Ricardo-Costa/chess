@@ -1,14 +1,14 @@
-import kingMovementsMap from "../../configs/movements/king-movements-map";
+import pawnTopMovementsMap from "../../configs/movements/pawn-top-movements-map";
 import { MovementMapType } from "../../types/movement-map.type";
 import BasePiece from "./base-piece";
 
-export class King extends BasePiece {
+export class PawnTop extends BasePiece {
 
     constructor(protected position: string) {
-      super(position);
+      super(position)
     }
 
     getMap(): MovementMapType {
-        return kingMovementsMap
+        return pawnTopMovementsMap
     }
 }

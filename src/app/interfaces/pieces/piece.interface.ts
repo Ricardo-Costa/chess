@@ -1,5 +1,11 @@
-import { Movement } from "../../models/movement";
+import { MovementMapType } from "../../types/movement-map.type";
 
 export interface IPiece {
-    getMap(): Movement[]
+    getMap(): MovementMapType
+
+    setPosition(position: string): void
+
+    getPosition(): string
+
+    getFullPositions(): string[]
 }

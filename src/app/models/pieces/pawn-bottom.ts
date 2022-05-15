@@ -1,10 +1,14 @@
-import { IPiece } from "../../interfaces/pieces/piece.interface";
-import { Movement } from "../movement";
+import pawnBottomMovementsMap from "../../configs/movements/pawn-bottom-movements-map";
+import { MovementMapType } from "../../types/movement-map.type";
+import BasePiece from "./base-piece";
 
-export class PawnBottom implements IPiece {
-    constructor(readonly initialPosition: string) {}
+export class PawnBottom extends BasePiece {
 
-    getMap(): Movement[] {
-        return []
+    constructor(protected position: string) {
+      super(position)
+    }
+
+    getMap(): MovementMapType {
+        return pawnBottomMovementsMap
     }
 }

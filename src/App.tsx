@@ -6,29 +6,50 @@ import { Block } from './app/components/Block';
 import { Footer } from './app/components/Footer';
 import './assets/styles.scss';
 import 'animate.css';
-import { TOTAL_BLOCKS } from './app/configs';
+import AnalizeActions from './app/actions/analize';
+import { PieceField } from './app/models/piece-field';
 
 const App = () => {
-  const [ gameStatus ] = useState<GameStatus>(genereteInitialStatus());
-  const [ blocks ] = useState<number>(TOTAL_BLOCKS);
+  const [ gameStatus, setGameStatus ] = useState<GameStatus>(genereteInitialStatus());
+  const [ targetPiece, setTargetPiece ] = useState<PieceField|undefined>(undefined);
   const [ positions ] = useState<string[]>([]);
 
+  const clickBlock = (position: string) => {
+    const pieceField: PieceField = Reflect.get(gameStatus.fieldState, position);
 
-  const clickBlock = (blockId: number, position: string) => {
-    console.log('Do something...')
-    positions.push(position)
-    console.log(positions)
+    // set target piece
+    if (pieceField.getPiece() && !targetPiece) {
+      // TODO varificar se posição válida
+      // const availableActions = AnalizeActions.identifyOptions(
+      //   piece,
+      //   gameStatus
+      // );
+
+      setTargetPiece(pieceField);
+    }
+    // set new position
+    else if (!pieceField.getPiece() && targetPiece) {
+
+      // TODO varificar se posição válida
+      // const availableActions = AnalizeActions.identifyOptions(
+      //   piece,
+      //   gameStatus
+      // );
+      
+      const newGameStatus: GameStatus = targetPiece.setPosition(targetPiece, position, gameStatus);
+      setGameStatus(newGameStatus);
+      setTargetPiece(undefined);
+    }
+    
+    positions.push(position);
   };
 
   const renderBlocks = () => {
     const el: ReactElement[] | null = [];
-    let blockKey = 0;
     for (const fieldPosition in gameStatus.fieldState) {
-      blockKey = Date.now() * Math.random()
       el.push(
         <Block
-          key={blockKey}
-          block={blockKey}
+          key={fieldPosition}
           position={fieldPosition}
           pieceField={Reflect.get(gameStatus.fieldState, fieldPosition)}
           clickBlock={clickBlock}
@@ -38,16 +59,16 @@ const App = () => {
     return el;
   }
 
-  const startGame = () => {
-    console.log('Start game...')
-  }
+  // const startGame = () => {
+  //   console.log('Start game...')
+  // }
 
-  // on start
-  useEffect(() => {
-      startGame();
-    },
-    []
-  );
+  // // on start
+  // useEffect(() => {
+  //     startGame();
+  //   },
+  //   []
+  // );
 
   // on unmount
   // useEffect(() => {

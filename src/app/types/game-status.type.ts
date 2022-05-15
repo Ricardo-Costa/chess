@@ -1,6 +1,6 @@
-import { PieceField } from "../models/piece-field";
+import { FieldMapType } from "./field-map.type";
 
 export type GameStatus = {
-  fieldState: object
+  fieldState: FieldMapType
   level: number
 };
