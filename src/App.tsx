@@ -31,8 +31,6 @@ const App = () => {
         gameStatus
       );
 
-      console.log(availableActions)
-
       setTargetPiece(pieceField);
       setHighlightAvailableActions(availableActions);
     }

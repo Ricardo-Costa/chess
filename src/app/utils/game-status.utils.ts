@@ -20,3 +20,16 @@ export const getMyPiecesPosition = (playerTag: Players, gameStatus: GameStatus):
   }
   return piecePositions;
 }
+
+export const getOpponentPiecesPosition = (playerTag: Players, gameStatus: GameStatus): string[] => {
+  const opponentTag: Players = playerTag === Players.ONE ? Players.TWO : Players.ONE;
+
+  const piecePositions: string[] = [];
+  let pieceField: PieceField;
+  for (const field in gameStatus.fieldState) {
+    pieceField = Reflect.get(gameStatus.fieldState, field);
+
+    if (pieceField.getPlayerTag() === opponentTag) piecePositions.push(field);
+  }
+  return piecePositions;
+}
