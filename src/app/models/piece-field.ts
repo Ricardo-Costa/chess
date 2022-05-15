@@ -1,11 +1,17 @@
+import { Players } from "../enum/players.enum";
 import { GameStatus } from "../types/game-status.type";
 import BasePiece from "./pieces/base-piece";
 
 export class PieceField {
   constructor(
     public position: string,
-    protected piece: BasePiece | null
+    protected piece: BasePiece | null = null,
+    protected playerTag: Players | null = null 
   ) {}
+
+  getPlayerTag(): Players | null {
+    return this.playerTag;
+  }
 
   getPiece(): BasePiece | null {
     return this.piece

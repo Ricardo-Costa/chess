@@ -1,3 +1,4 @@
+import { Players } from "../../enum/players.enum";
 import { PieceField } from "../../models/piece-field";
 import { King } from "../../models/pieces/king";
 import { PawnBottom } from "../../models/pieces/pawn-bottom";
@@ -8,13 +9,13 @@ const fieldMap = {
   "B8": new PieceField("B8", null),
   "C8": new PieceField("C8", null),
   "D8": new PieceField("D8", null),
-  "E8": new PieceField("E8", new King("E8")),
+  "E8": new PieceField("E8", new King("E8"), Players.ONE),
   "F8": new PieceField("F8", null),
   "G8": new PieceField("G8", null),
   "H8": new PieceField("H8", null),
   "A7": new PieceField("A7", null),
   "B7": new PieceField("B7", null),
-  "C7": new PieceField("C7", new PawnTop("C7")),
+  "C7": new PieceField("C7", new PawnTop("C7"), Players.ONE),
   "D7": new PieceField("D7", null),
   "E7": new PieceField("E7", null),
   "F7": new PieceField("F7", null),
@@ -53,7 +54,7 @@ const fieldMap = {
   "G3": new PieceField("G3", null),
   "H3": new PieceField("H3", null),
   "A2": new PieceField("A2", null),
-  "B2": new PieceField("B2", new PawnBottom("B2")),
+  "B2": new PieceField("B2", new PawnBottom("B2"), Players.TWO),
   "C2": new PieceField("C2", null),
   "D2": new PieceField("D2", null),
   "E2": new PieceField("E2", null),

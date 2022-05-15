@@ -8,6 +8,8 @@ import './assets/styles.scss';
 import 'animate.css';
 import AnalizeActions from './app/actions/analize';
 import { PieceField } from './app/models/piece-field';
+import Player from './app/models/player';
+import { Players } from './app/enum/players.enum';
 
 const App = () => {
   const [ gameStatus, setGameStatus ] = useState<GameStatus>(genereteInitialStatus());
@@ -15,12 +17,16 @@ const App = () => {
   const [ highlightAvailableActions, setHighlightAvailableActions ] = useState<string[]>([]);
   const [ positions ] = useState<string[]>([]); // TODO TEMP
 
+  const playerOne = new Player(Players.ONE, "Player One", 0);
+  const playerTwo = new Player(Players.TWO, "Player Two", 0);
+
   const clickBlock = (position: string) => {
     const pieceField: PieceField = Reflect.get(gameStatus.fieldState, position);
 
     // set target piece
     if (pieceField.getPiece() && !targetPiece) {
       const availableActions = AnalizeActions.identifyOptions(
+        pieceField.getPlayerTag(),
         pieceField.getPiece(),
         gameStatus
       );
