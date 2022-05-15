@@ -13,63 +13,52 @@ const specialMovementByPositionMap = {
   "H": [ "G" ],
 }
 
+const verifyCompatibility = (
+  nextPosition: number,
+  piece: BasePiece | null,
+  availablePositions: string[],
+  opponentPositions: string[]
+): string[] => {
+  
+  if (!piece) return [];
+
+  return availablePositions.filter( position => {
+    const keyOfPosition = piece.getPosition()[0];
+    const specialMovements: string[] = Reflect.get(specialMovementByPositionMap, keyOfPosition);
+
+    let specialPosition;
+    const keepSpecialPositions = [], keepValidSpecialPositions = [];
+    for (const key of specialMovements) {
+      specialPosition = `${key}${nextPosition}`;
+
+      keepSpecialPositions.push(specialPosition);
+
+      if (opponentPositions.includes(specialPosition))
+        keepValidSpecialPositions.push(specialPosition);
+    }      
+    return (
+      keepValidSpecialPositions.includes(position) ||
+      !keepSpecialPositions.includes(position)
+    );
+  });
+}
+
 export const checkWithValidDiagonalMovement = (
   piece: BasePiece | null,
   availablePositions: string[],
   opponentPositions: string[]
 ): string[] => {
 
+  let nextPosition = 0;
+
   // rule action to PawnTop type
   if (piece instanceof PawnTop) {
-    piece.getPosition();
-
-    return availablePositions.filter( position => {
-      const keyOfPosition = piece.getPosition()[0];
-      const specialMovements: string[] = Reflect.get(specialMovementByPositionMap, keyOfPosition);
-
-      let specialPosition;
-      const keepSpecialPositions = [], keepValidSpecialPositions = [];
-      const nextPosition = Number(piece.getPosition()[1])-1;
-      for (const key of specialMovements) {
-        specialPosition = `${key}${nextPosition}`;
-
-        keepSpecialPositions.push(specialPosition);
-
-        if (opponentPositions.includes(specialPosition))
-          keepValidSpecialPositions.push(specialPosition);
-      }      
-      return (
-        keepValidSpecialPositions.includes(position) ||
-        !keepSpecialPositions.includes(position)
-      );
-    });
+    nextPosition = Number(piece.getPosition()[1])-1;
+    return verifyCompatibility(nextPosition, piece, availablePositions, opponentPositions);
   }
-
   // rule action to PawnBottom type
-  if (piece instanceof PawnBottom) {
-    piece.getPosition();
-
-    return availablePositions.filter( position => {
-      const keyOfPosition = piece.getPosition()[0];
-      const specialMovements: string[] = Reflect.get(specialMovementByPositionMap, keyOfPosition);
-
-      let specialPosition;
-      const keepSpecialPositions = [], keepValidSpecialPositions = [];
-      const nextPosition = Number(piece.getPosition()[1])+1;
-      for (const key of specialMovements) {
-        specialPosition = `${key}${nextPosition}`;
-
-        keepSpecialPositions.push(specialPosition);
-
-        if (opponentPositions.includes(specialPosition))
-          keepValidSpecialPositions.push(specialPosition);
-      }      
-      return (
-        keepValidSpecialPositions.includes(position) ||
-        !keepSpecialPositions.includes(position)
-      );
-    });
+  else if (piece instanceof PawnBottom) {
+    nextPosition = Number(piece.getPosition()[1])+1;
   }
-
-  return availablePositions;
+  return verifyCompatibility(nextPosition, piece, availablePositions, opponentPositions);
 }
