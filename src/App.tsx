@@ -22,8 +22,18 @@ const App = () => {
 
   const renderBlocks = () => {
     const el: ReactElement[] | null = [];
-    for (let block=0; block < gameStatus.fieldState.length; block++) {
-      el.push(<Block key={block} block={block} position={gameStatus.fieldState[block].position} clickBlock={clickBlock}/>)
+    let blockKey = 0;
+    for (const fieldPosition in gameStatus.fieldState) {
+      blockKey = Date.now() * Math.random()
+      el.push(
+        <Block
+          key={blockKey}
+          block={blockKey}
+          position={fieldPosition}
+          pieceField={Reflect.get(gameStatus.fieldState, fieldPosition)}
+          clickBlock={clickBlock}
+        />
+      )
     }
     return el;
   }
