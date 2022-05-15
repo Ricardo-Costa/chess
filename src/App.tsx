@@ -12,33 +12,34 @@ import { PieceField } from './app/models/piece-field';
 const App = () => {
   const [ gameStatus, setGameStatus ] = useState<GameStatus>(genereteInitialStatus());
   const [ targetPiece, setTargetPiece ] = useState<PieceField|undefined>(undefined);
-  const [ positions ] = useState<string[]>([]);
+  const [ highlightAvailableActions, setHighlightAvailableActions ] = useState<string[]>([]);
+  const [ positions ] = useState<string[]>([]); // TODO TEMP
 
   const clickBlock = (position: string) => {
     const pieceField: PieceField = Reflect.get(gameStatus.fieldState, position);
 
     // set target piece
     if (pieceField.getPiece() && !targetPiece) {
-      // TODO varificar se posição válida
-      // const availableActions = AnalizeActions.identifyOptions(
-      //   piece,
-      //   gameStatus
-      // );
+      const availableActions = AnalizeActions.identifyOptions(
+        pieceField.getPiece(),
+        gameStatus
+      );
+
+      console.log(availableActions)
 
       setTargetPiece(pieceField);
+      setHighlightAvailableActions(availableActions);
     }
     // set new position
     else if (!pieceField.getPiece() && targetPiece) {
+      // is a valid new position
+      if (highlightAvailableActions.includes(position)) {
+        const newGameStatus: GameStatus = targetPiece.setPosition(targetPiece, position, gameStatus);
+        setGameStatus(newGameStatus);
 
-      // TODO varificar se posição válida
-      // const availableActions = AnalizeActions.identifyOptions(
-      //   piece,
-      //   gameStatus
-      // );
-      
-      const newGameStatus: GameStatus = targetPiece.setPosition(targetPiece, position, gameStatus);
-      setGameStatus(newGameStatus);
-      setTargetPiece(undefined);
+        setTargetPiece(undefined);
+        setHighlightAvailableActions([]);
+      }
     }
     
     positions.push(position);
@@ -49,6 +50,7 @@ const App = () => {
     for (const fieldPosition in gameStatus.fieldState) {
       el.push(
         <Block
+          highlight={highlightAvailableActions.includes(fieldPosition)}
           key={fieldPosition}
           position={fieldPosition}
           pieceField={Reflect.get(gameStatus.fieldState, fieldPosition)}

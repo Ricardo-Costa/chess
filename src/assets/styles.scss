@@ -49,6 +49,9 @@ div#header {
   div.block:active {
     border: solid red 1px;
   }
+  .lighlight-block {
+    background-color: rgb(203, 255, 198) !important;
+  }
 }
 
 div#footer {

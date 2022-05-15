@@ -9,7 +9,8 @@ export default class AnalizeActions {
    * @param piece 
    * @param gameStatus 
    */
-  static identifyOptions(piece: BasePiece, gameStatus: GameStatus): string[] {
+  static identifyOptions(piece: BasePiece | null, gameStatus: GameStatus): string[] {
+    if (!piece) return [];
     return piece.getFullPositions();
   }
 

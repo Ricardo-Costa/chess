@@ -11,3 +11,4 @@ References:
 - https://reactjs.org
 - https://animate.style
 - https://fonts.google.com/specimen/Play?query=play
+- https://www.ichess.net/blog/chess-pieces-moves/
