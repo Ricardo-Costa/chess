@@ -40,23 +40,19 @@ const verifyCompatibility = (
     const specialMovementsForbidden: string[] = Reflect.get(specialMovementByPositionForbiddenMap, keyOfPosition);
 
     let specialPosition;
-    const keepSpecialPositions = [], keepValidSpecialPositions = [];
+    const keepValidSpecialPositions = [];
     // keep positions that this piece can go to event that place has um opponent piece
     for (const key of specialMovements) {
       specialPosition = `${key}${nextPosition}`;
-
-      keepSpecialPositions.push(specialPosition);
 
       if (opponentPositions.includes(specialPosition))
         keepValidSpecialPositions.push(specialPosition);
     }
     let specialPositionForbidden;
-    const keepSpecialPositionsForbidden = [], keepValidSpecialPositionsForbidden = [];
+    const keepValidSpecialPositionsForbidden = [];
     // keep positions that this piece can go to, if that place has um opponent piece
     for (const key of specialMovementsForbidden) {
       specialPositionForbidden = `${key}${nextPosition}`;
-
-      keepSpecialPositionsForbidden.push(specialPositionForbidden);
 
       if (opponentPositions.includes(specialPositionForbidden))
         keepValidSpecialPositionsForbidden.push(specialPositionForbidden);
