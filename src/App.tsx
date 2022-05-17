@@ -23,8 +23,7 @@ const App = () => {
   const clickBlock = (position: string) => {
     const pieceField: PieceField = Reflect.get(gameStatus.fieldState, position);
 
-    // set target piece
-    if (pieceField.getPiece() && !targetPiece) {
+    const setTarget = () => {
       const availableActions = AnalizeActions.identifyOptions(
         pieceField.getPlayerTag(),
         pieceField.getPiece(),
@@ -33,6 +32,11 @@ const App = () => {
 
       setTargetPiece(pieceField);
       setHighlightAvailableActions(availableActions);
+    };
+
+    // set target piece
+    if (pieceField.getPiece() && !targetPiece) {
+      setTarget();
     }
     // set new position
     else if (!pieceField.getPiece() && targetPiece) {
@@ -44,6 +48,12 @@ const App = () => {
         setTargetPiece(undefined);
         setHighlightAvailableActions([]);
       }
+    }
+    // clean up target piece
+    else if (pieceField.getPiece() && targetPiece) {
+      setTargetPiece(undefined);
+      setHighlightAvailableActions([]);
+      setTarget();
     }
     
     positions.push(position);
